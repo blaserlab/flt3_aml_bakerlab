@@ -1,0 +1,11 @@
+sample_id,patient,timepoint,tissue,n_cells,running_total
+Y5206,2,pretreatment,bm,5444,5444
+Y5207,2,C1D26_gilt,bm,5803,11247
+Y5208,1,pretreatment,bm,5732,16979
+Y5209,1,post_2_cycles_gilt,bm,6705,23684
+Y6584,1,post_2_cycles_gilt,blood,10316,34000
+Y6585,1,relapse,blood,8966,42966
+Y6586,3,pretreatment,bm,7939,50905
+Y6587,3,post_2_cycles_gilt,bm,6727,57632
+Y6588,4,pretreatment,bm,10405,68037
+Y6589,4,post_1_cycle_gilt,bm,9918,77955

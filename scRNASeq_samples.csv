@@ -1,0 +1,11 @@
+patient,sample_date,timepoint,blast_pct,tissue,scRNASeq_run_date,vial_id,sample_id,response
+1,2018-06-18,pretreatment,35.00,bm,2019-08-01,U-18-2305,Y5208,PR
+1,2018-08-29,post_2_cycles_gilt,15.00,bm,2019-08-01,U-18-4592,Y5209,PR
+1,2018-08-29,post_2_cycles_gilt,15.00,blood,2020-03-04,U-18-4567,Y6584,PR
+1,2018-11-20,relapse,86.00,blood,2020-03-04,U-18-7566,Y6585,PR
+2,2019-03-05,pretreatment,85.00,bm,2019-08-01,U-19-1110,Y5206,refractory
+2,2019-04-08,C1D26_gilt,70.00,bm,2019-08-01,U-19-1669,Y5207,refractory
+3,2019-02-01,pretreatment,68.00,bm,2020-03-04,U-19-0518,Y6586,CR
+3,2019-03-29,post_2_cycles_gilt,0.00,bm,2020-03-04,U-19-1492,Y6587,CR
+4,2019-10-08,pretreatment,88.00,bm,2020-03-04,U-19-4710,Y6588,refractory
+4,2019-11-07,post_1_cycle_gilt,91.00,bm,2020-03-04,U-19-5134,Y6589,refractory
