@@ -9,6 +9,7 @@ library("htmltools")
 library("ggpubr")
 library("pheatmap")
 library("ggplotify")
+library("RColorBrewer")
 
 #custom operators
 `%notin%` <- Negate(`%in%`)

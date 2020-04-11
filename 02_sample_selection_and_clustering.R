@@ -1,5 +1,4 @@
 source('00_packages_functions.R', echo=TRUE)
-#load.pigz(file = "flt3_aml_bakerlab.RData")
 
 # choose whether to include blood and whether to use alignment or not
 # cds_trimmed_all - not aligned!
@@ -207,19 +206,6 @@ three_gene<-plot_cells_alt(cds_aligned_all, gene_or_genes = c("CD34","MPO","FLT3
 save_plot(three_gene, filename = "plots_out/three_gene.pdf", base_width = 7.5, base_height = 2.5)
 
 # general group stats
-## cell counts by cluster
-granular_counts <- tbl_df(colData(cds_aligned_all)) %>%
-  group_by(sample_id,partition_assignment) %>%
-  summarise(
-    patient = first(patient),
-    timepoint = first(timepoint),
-    tissue = first(tissue),
-    n_cells = n()
-  ) %>%
-  ungroup() %>%
-  mutate(running_total = cumsum(n_cells)) %>%
-  write_csv(path = "data_out/partition_assignment_counts.csv")
-
 ## cell counts by sample
 patient_timepoint_counts <- tbl_df(colData(cds_aligned_all)) %>%
   group_by(sample_id) %>%
@@ -230,7 +216,30 @@ patient_timepoint_counts <- tbl_df(colData(cds_aligned_all)) %>%
     n_cells = n()
   ) %>%
   ungroup() %>%
-  mutate(running_total = cumsum(n_cells)) %>%
+  mutate(running_total = cumsum(n_cells), load_norm_fac = 77955/n_cells/10,norm_cells = load_norm_fac*n_cells) %>%
   write_csv(path = "data_out/patient_timepoint_counts.csv")
+
+## create normalization factor column in cds
+colData(cds_aligned_all)[22]<-left_join(tbl_df(colData(cds_aligned_all)),patient_timepoint_counts)[24]
+
+## cell counts by cluster
+sample_pa_counts <- tbl_df(colData(cds_aligned_all)) %>%
+  group_by(sample_id,partition_assignment) %>%
+  summarise(
+    patient = first(patient),
+    timepoint = first(timepoint),
+    tissue = first(tissue),
+    n_cells = n(),
+    load_norm_fac = unique(load_norm_fac)
+  ) %>%
+  arrange(partition_assignment) %>%
+  group_by(partition_assignment) %>%
+  mutate(running_total = cumsum(n_cells),
+         raw_partition_counts = sum(n_cells),
+         norm_cell_num = n_cells * load_norm_fac,
+         norm_partition_counts = sum(norm_cell_num),
+         norm_pct = norm_cell_num/norm_partition_counts*100) %>%
+  write_csv(path = "data_out/sample_pa_counts.csv")
+
 
 save.image.pigz(file = "flt3_aml_bakerlab.RData", n.cores = 39)
