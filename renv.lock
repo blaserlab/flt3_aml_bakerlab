@@ -1766,11 +1766,11 @@
     },
     "flt3.aml.bakerlab.datapkg": {
       "Package": "flt3.aml.bakerlab.datapkg",
-      "Version": "0.0.0.9008",
+      "Version": "1.0.0",
       "Source": "Local",
       "RemoteType": "local",
-      "RemoteUrl": "/home/OSUMC.EDU/blas02/network/X/Labs/Blaser/collaborators/bakerlab_flt3_gilt_project/datapkg/flt3.aml.bakerlab.datapkg_0.0.0.9008.tar.gz",
-      "Hash": "eaa0864978916c6588e3ff6a37c3f9f5",
+      "RemoteUrl": "/home/OSUMC.EDU/blas02/network/X/Labs/Blaser/collaborators/bakerlab_flt3_gilt_project/datapkg/flt3.aml.bakerlab.datapkg_1.0.0.tar.gz",
+      "Hash": "72afeaf97c544a144e0561c6c0d1f7ae",
       "Requirements": [
         "blaseRtools",
         "cowplot",
