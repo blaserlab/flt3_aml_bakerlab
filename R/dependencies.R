@@ -43,7 +43,7 @@ suppressPackageStartupMessages(library("stats"))
 suppressPackageStartupMessages(library("ggtext"))
 
 # uncomment and use the following to install or update the data package---------------------------------------
-bb_renv_datapkg(path = "/home/OSUMC.EDU/blas02/network/X/Labs/Blaser/collaborators/bakerlab_flt3_gilt_project/datapkg")
+bb_renv_datapkg(path = "/home/OSUMC.EDU/blas02/network/X/Labs/Blaser/share/collaborators/bakerlab_flt3_gilt_project/datapkg")
 
 # use this to load the data package-------------------------------------
 
