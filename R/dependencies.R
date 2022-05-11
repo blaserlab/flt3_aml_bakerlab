@@ -13,11 +13,11 @@
 # package installation ----------------------------------------------------
 
 # # Try this first...it's faster:
-# blaseRtemplates::easy_install("<package name>", how = "link_from_cache")
+# blaseRtemplates::easy_install("CellChat", how = "link_from_cache")
 
 # # If you need a new package or an update, try this:
 # blaseRtemplates::easy_install("", how = "new_or_update")
-# blaseRtemplates::easy_install("prompt", how = "new_or_update")
+# blaseRtemplates::easy_install("blaserlab/blaseRtools", how = "new_or_update")
 
 # # If you are installing from a "tarball", use this:
 # blaseRtemplates::easy_install("/path/to/tarball.tar.gz")
@@ -41,6 +41,7 @@ suppressPackageStartupMessages(library("ggpubr"))
 suppressPackageStartupMessages(library("rstatix"))
 suppressPackageStartupMessages(library("stats"))
 suppressPackageStartupMessages(library("ggtext"))
+suppressPackageStartupMessages(library("CellChat"))
 
 # uncomment and use the following to install or update the data package---------------------------------------
 bb_renv_datapkg(path = "/home/OSUMC.EDU/blas02/network/X/Labs/Blaser/share/collaborators/bakerlab_flt3_gilt_project/datapkg")

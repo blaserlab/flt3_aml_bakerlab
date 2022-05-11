@@ -143,6 +143,19 @@ dotplot_genes <-
     "theend"
   )
 
+dotplot_genes_revision <- CellChat::CellChatDB.human$interaction |> 
+  filter(ligand %in% dotplot_genes) |> 
+  bind_rows(CellChat::CellChatDB.human$interaction |> 
+              filter(receptor %in% dotplot_genes)) |> 
+  select(ligand, receptor, pathway_name) |> 
+  as_tibble() |> 
+  bind_rows(tribble(~ligand, ~receptor, ~pathway_name,
+                    "IL6", "IL6R", "IL6",
+                    "CSF2", "CSF2RA", "CSF2")) |> 
+  pivot_longer(c(ligand, receptor), values_to = "Gene", names_to = "gene_type") |> 
+  distinct() |> 
+  filter(Gene != "ACKR1")
+
 colData(cds_anno_aligned_tissue_id)$timepoint_binary_short <- recode(colData(cds_anno_aligned_tissue_id)$timepoint_binary, 
                                                                      "pre-treatment" = "pre",
                                                                      "post-treatment" = "post")
@@ -150,7 +163,8 @@ colData(cds_anno_aligned_tissue_id)$timepoint_binary_short <- recode(colData(cds
 myeloblast_dotplot <- 
   bb_gene_dotplot(
   cds = cds_anno_aligned_tissue_id[,colData(cds_anno_aligned_tissue_id)$partition_assignment_1 == "Myeloblast"],
-  markers = dotplot_genes,
+  # markers = dotplot_genes,
+  markers = unique(dotplot_genes_revision$Gene),
   scale_expression_by_gene = TRUE,
   group_cells_by = "multifactorial",
   group_ordering = tribble(
@@ -162,11 +176,28 @@ myeloblast_dotplot <-
   ),
 colorscale_name = "Expression",
 sizescale_name = "Proportion\nExpressing",
-gene_ordering = dotplot_genes, 
+# gene_ordering = dotplot_genes, 
 max.size = 5
   
 ) + labs(x = NULL, y = NULL) 
-myeloblast_dotplot
+
+myeloblast_dotplot_revision_data <- left_join(myeloblast_dotplot[["data"]], dotplot_genes_revision) |> 
+  mutate(Gene = factor(Gene)) |> 
+  mutate(Gene = fct_reorder(Gene, gene_type)) |> 
+  mutate(Gene = fct_rev(Gene))
+
+myeloblast_dotplot_revision <- ggplot(myeloblast_dotplot_revision_data, 
+       mapping = aes(x = axis, y = Gene, color = mean, size = percentage)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_size_area() +
+  facet_grid(pathway_name ~ facet, scales = "free", space = "free_y") +
+  theme(strip.background = element_blank()) +
+  theme(strip.text.y = element_blank()) +
+  labs(color = "Expression", 
+       size = "Proportion\nExpressing",
+       x = NULL,
+       y = NULL)
 
 # gene module heatmap ------------------------------------------------------
 

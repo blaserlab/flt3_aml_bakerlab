@@ -27,3 +27,13 @@ bb_cellmeta(filter_cds(
   summarise()
 bb_gene_umap(cds_anno_aligned_tissue_id, "CXCL8") + facet_grid(chemo_response ~ timepoint_binary)
 bb_gene_umap(cds_anno_aligned_tissue_id, "IRF3") + facet_grid(chemo_response ~ timepoint_binary)
+
+glimpse(bb_cellmeta(cds_anno_aligned_tissue_id))
+bb_cellmeta(cds_anno_aligned_tissue_id) |> 
+  group_by(response_timepoint, timepoint_corrected, response_timepoint_pt) |> 
+  summarise()
+
+test <- bb_cellchat_heatmap(cellchat_list$`sensitive_post-treatment_pt22`, source_filter = "Myeloblast",rowanno = "Annotation")
+plot_grid(test)
+
+bb_gene_umap(cds_anno_aligned_tissue_id, "CXCL8")
