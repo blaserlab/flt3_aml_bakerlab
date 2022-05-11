@@ -1,8 +1,8 @@
 
 fig5_left <- plot_grid(
-  crispr_ko_plot,
-  mv411_drug_plot,
-  molm13_drug_plot,
+  cytokine_plotlist$crispr_ko_plot,
+  cytokine_plotlist$mv411_drug_plot,
+  cytokine_plotlist$ molm13_drug_plot,
   nrow = 4,
   align = "v",
   axis = "l",

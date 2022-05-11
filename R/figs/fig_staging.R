@@ -535,46 +535,77 @@ umap_bmx_response_timepoint <-
 
 # cytokine data ----------------------------------------------
 
-# figure 5A
-crispr_ko_plot <- 
-  cytokine_array_data |> 
-  filter(sample_type == "bmx_crispr") |> 
-  filter(analyte != "CXCL1") |> 
-  ggplot(mapping = aes(x = analyte, y = value, fill = condition, color = condition)) +
-  geom_bar(stat = "identity", width=0.4, position = position_dodge(width=0.5)) +
-  scale_color_manual(values = c("WT" = "#000000", "KO12" = "#0000FF", "KO13" = "#A00000"), aesthetics = c("color", "fill")) +
-  theme(legend.position = c(0.1, 0.9)) +
-  theme(legend.title = element_blank()) +
-  labs(x = NULL, y = "pg/mL")
+cytokine_plotfun <- function(type, samp, title, dat, pal) {
+  dat_avg <- dat |>
+    filter(value_type == "average") |>
+    filter(sample == samp) |>
+    filter(sample_type == type) |>
+    filter(analyte != "CXCL1") |>
+    filter(!is.na(value))
+  dat_rep <- dat |>
+    filter(str_detect(value_type, "rep")) |>
+    filter(sample == samp) |>
+    filter(sample_type == type) |>
+    filter(analyte != "CXCL1") |>
+    filter(!is.na(value))
+  conds <- as.character(unique(dat_avg$condition))
+  pal <- pal[conds]
+  p <- ggplot(mapping = aes(
+    x = analyte,
+    y = value,
+    fill = condition,
+    color = condition
+  )) +
+    geom_bar(
+      data = dat_avg,
+      stat = "identity",
+      width = 0.4,
+      alpha = 0.2,
+      position = position_dodge(width = 0.5)
+    ) +
+    geom_point(
+      data = dat_rep,
+      pch = 21,
+      size = 2,
+      position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.5),
+      show.legend = FALSE
+    ) +
+    scale_color_manual(values = pal) +
+    scale_fill_manual(values = alpha(colour = pal,
+                                     alpha = 0.4)) +
+    theme(legend.position = c(0.1, 0.9)) +
+    theme(legend.title = element_blank()) +
+    labs(x = NULL, y = "pg/mL", title = title)
+  if (samp == "MOLM13") {
+    p <- p +
+      scale_y_log10() +
+      annotation_logticks(sides = "l")
+    
+  }
+  p
+}
 
-# figure 5B
-mv411_drug_plot <- 
-  cytokine_array_data |> 
-  filter(sample_type == "cell_line_treatment", sample == "MV411") |> 
-  filter(analyte != "CXCL1") |> 
-  ggplot(mapping = aes(x = analyte, y = value, fill = condition, color = condition)) +
-  geom_bar(stat = "identity", width=0.4, position = position_dodge(width=0.5)) +
-  scale_color_manual(values = c("DMSO" = "#000000", "CHMFL" = "#0000FF"), aesthetics = c("color", "fill")) +
-  theme(legend.position = c(0.1, 0.9)) +
-  labs(x = NULL, y = "pg/mL", fill = "MV4-11", color = "MV4-11")
+cytokine_plotlist <- pmap(
+  .l = list(
+    x = c("MV411", "MV411", "MOLM13"),
+    y = c("bmx_crispr", "cell_line_treatment", "cell_line_treatment"),
+    z = c("", "MV4-11", "MOLM13")
+  ),
+  .f = \(x, y, z) cytokine_plotfun(
+    samp = x,
+    type = y,
+    title = z,
+    dat = cytokine_array_data,
+    pal = experimental_group_palette
+  )
+) |> set_names(c("crispr_ko_plot", "mv411_drug_plot", "molm13_drug_plot"))
 
-# figure 5C
-molm13_drug_plot <- 
-  cytokine_array_data |> 
-  filter(sample_type == "cell_line_treatment", sample == "MOLM13") |> 
-  filter(analyte != "CXCL1") |> 
-  ggplot(mapping = aes(x = analyte, y = value, fill = condition, color = condition)) +
-  geom_bar(stat = "identity", width=0.4, position = position_dodge(width=0.5)) +
-  scale_color_manual(values = c("DMSO" = "#000000", "CHMFL" = "#0000FF"), aesthetics = c("color", "fill")) +
-  theme(legend.position = c(0.1, 0.9)) +
-  labs(x = NULL, y = "pg/mL", fill = "MOLM13", color = "MOLM13") +
-  scale_y_log10() +
-  annotation_logticks(sides = "l")
 
 # figure 5D
 dmso_matrix <- 
   cytokine_array_data |> 
   filter(sample_type == "primary") |> 
+  filter(value_type == "average") |> 
   filter(condition == "DMSO") |> 
   select(sample, value, analyte) |> 
   pivot_wider(names_from = analyte, values_from = value) |> 
@@ -583,6 +614,7 @@ dmso_matrix <-
 chmfl_matrix <- 
   cytokine_array_data |> 
   filter(sample_type == "primary") |> 
+  filter(value_type == "average") |> 
   filter(condition == "CHMFL") |> 
   select(sample, value, analyte) |> 
   pivot_wider(names_from = analyte, values_from = value) |> 
@@ -604,3 +636,4 @@ pt_sample_heatmap <-
     heatmap_legend_param = list(direction = "horizontal", 
                                 position = "lefttop")
   ), heatmap_legend_side = "bottom"), wrap = T)
+plot_grid(pt_sample_heatmap)

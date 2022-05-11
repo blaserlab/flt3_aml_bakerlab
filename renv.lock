@@ -1986,11 +1986,11 @@
     },
     "flt3.aml.bakerlab.datapkg": {
       "Package": "flt3.aml.bakerlab.datapkg",
-      "Version": "1.0.4",
+      "Version": "1.0.5",
       "Source": "Local",
-      "RemotePkgRef": "local::/workspace/rst/renv/pkgcache/R/pkgcache/pkg/src/contrib/flt3.aml.bakerlab.datapkg_1.0.4.tar.gz",
+      "RemotePkgRef": "local::/workspace/rst/renv/pkgcache/R/pkgcache/pkg/src/contrib/flt3.aml.bakerlab.datapkg_1.0.5.tar.gz",
       "RemoteType": "local",
-      "Hash": "6dc75c656552e2243180ede97f67a5d7",
+      "Hash": "c56d01201f940a220abe3d86ece04da5",
       "Requirements": []
     },
     "fontawesome": {

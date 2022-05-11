@@ -22,7 +22,12 @@ experimental_group_palette = c(
   "B" = "#FDB462",
   "CD16 Monocytoid" = "#B3DE69",
   "Peripheral T" = "#FCCDE5",
-  "PDC" = "#D9D9D9"
+  "PDC" = "#D9D9D9", 
+  "WT" = "#000000", 
+  "KO12" = "#0000FF", 
+  "KO13" = "#A00000",
+  "DMSO" = "#000000", 
+  "CHMFL" = "#0000FF"
 )
 
 
