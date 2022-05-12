@@ -183,7 +183,9 @@ max.size = 5
 
 myeloblast_dotplot_revision_data <- left_join(myeloblast_dotplot[["data"]], dotplot_genes_revision) |> 
   mutate(Gene = factor(Gene)) |> 
-  mutate(Gene = fct_reorder(Gene, gene_type)) |> 
+  mutate(gene_type = factor(gene_type, levels = c("receptor", "ligand"))) |> 
+  mutate(pathway_name = factor(pathway_name, levels = rev(c("FLT3", "IL6", "CSF2", "CXCL", "CCL")))) |> 
+  mutate(Gene = fct_reorder2(Gene, pathway_name, gene_type)) |> 
   mutate(Gene = fct_rev(Gene))
 
 myeloblast_dotplot_revision <- ggplot(myeloblast_dotplot_revision_data, 

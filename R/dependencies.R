@@ -17,7 +17,7 @@
 
 # # If you need a new package or an update, try this:
 # blaseRtemplates::easy_install("", how = "new_or_update")
-# blaseRtemplates::easy_install("blaserlab/blaseRtools", how = "new_or_update")
+# blaseRtemplates::easy_install("ggnewscale", how = "new_or_update")
 
 # # If you are installing from a "tarball", use this:
 # blaseRtemplates::easy_install("/path/to/tarball.tar.gz")
