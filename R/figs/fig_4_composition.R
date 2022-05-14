@@ -1,4 +1,4 @@
-fig_3 <- plot_grid(
+fig_4 <- plot_grid(
   volcano_plot_pre,
   umap_bmx_response_timepoint,
   NULL,
@@ -14,9 +14,9 @@ fig_3 <- plot_grid(
 
 
 save_plot(
-  plot = fig_3,
+  plot = fig_4 + theme(plot.background = element_rect(fill = "white")),
   # filename = "test.png",
-  filename = str_glue("{network_out}/fig_3.png"),
+  filename = str_glue("{network_out}/fig_4.png"),
   base_width = 7.5, 
   base_height = 9.75
 )

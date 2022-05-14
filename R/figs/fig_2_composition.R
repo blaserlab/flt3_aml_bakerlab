@@ -3,7 +3,7 @@ fig2 <- plot_grid(
   umap_partition,
   umap_myeloblast_localn,
   volcano_plot_post,
-  myeloblast_dotplot,
+  myeloblast_dotplot_revision,
   NULL,
   NULL,
   nrow = 3,
@@ -13,8 +13,9 @@ fig2 <- plot_grid(
   rel_heights = c(1, 1, 1)
 )
 
+
 save_plot(
-  plot = fig2,
+  plot = fig2 + theme(plot.background = element_rect(fill = "white")),
   # filename = "test.png",
   filename = str_glue("{network_out}/fig_2.png"),
   base_width = 7.5, 

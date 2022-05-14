@@ -55,6 +55,7 @@ volcano_plot_pre <-
              size = 0.5,
              alpha = 0.4) +
   geom_text_repel(color = "black",
+                  fontface = "italic",
                   box.padding = 0.5,
                   point.padding = 0.25,
                   min.segment.length = 0,
@@ -102,7 +103,8 @@ volcano_plot_post <-
   geom_point(shape = 21, 
              size = 0.5, 
              alpha = 0.4) +
-  geom_text_repel(color = "black", 
+  geom_text_repel(color = "black",
+                  fontface = "italic",  
                   box.padding = 0.5,
                   point.padding = 0.25,
                   min.segment.length = 0,
@@ -192,10 +194,11 @@ myeloblast_dotplot_revision <- ggplot(myeloblast_dotplot_revision_data,
        mapping = aes(x = axis, y = Gene, color = mean, size = percentage)) +
   geom_point() +
   scale_color_viridis_c() +
-  scale_size_area() +
+  scale_size_area(max_size = 4) +
   facet_grid(pathway_name ~ facet, scales = "free", space = "free_y") +
   theme(strip.background = element_blank()) +
   theme(strip.text.y = element_blank()) +
+  theme(axis.text.y = element_text(size = 8, face = "italic"))+
   labs(color = "Expression", 
        size = "Proportion\nExpressing",
        x = NULL,
@@ -532,12 +535,12 @@ umap_bmx_response_timepoint <-
   facet_grid(cols = vars(timepoint_binary),
              rows = vars(chemo_response)) +
   labs(title = "BMX") +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5, face = "italic")) +
   theme(panel.background = element_rect(color = "grey80"))
 
 # cytokine data ----------------------------------------------
 
-cytokine_plotfun <- function(type, samp, title, dat, pal) {
+cytokine_plotfun <- function(type, samp, title, dat, pal, yt) {
   dat_avg <- dat |>
     filter(value_type == "average") |>
     filter(sample == samp) |>
@@ -550,34 +553,59 @@ cytokine_plotfun <- function(type, samp, title, dat, pal) {
     filter(sample_type == type) |>
     filter(analyte != "CXCL1") |>
     filter(!is.na(value))
+  stat.test <- dat_rep %>%
+    group_by(analyte) |> 
+    t_test(value ~ condition) |>  
+    add_significance()
+  if (type == "cell_line_treatment" && samp == "MV411") {
+    stat.test <- add_row(.data = stat.test, analyte = "CCL4", .before = 4)
+  }
+  stat.test <- stat.test |> 
+    add_xy_position(x = "analyte", 
+                    dodge = 0.5, 
+                    y.trans = yt) |> 
+    filter(group1 %in% c("WT", "DMSO"))
   conds <- as.character(unique(dat_avg$condition))
   pal <- pal[conds]
   p <- ggplot(mapping = aes(
     x = analyte,
     y = value,
-    fill = condition,
-    color = condition
   )) +
     geom_bar(
       data = dat_avg,
       stat = "identity",
       width = 0.4,
       alpha = 0.2,
-      position = position_dodge(width = 0.5)
+      position = position_dodge(width = 0.5),
+      mapping = aes(
+        fill = condition,
+        color = condition
+      )
     ) +
     geom_point(
       data = dat_rep,
       pch = 21,
       size = 2,
       position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.5),
-      show.legend = FALSE
+      show.legend = FALSE,
+      mapping = aes(
+        fill = condition,
+        color = condition
+      )
+    ) +
+    ggpubr::stat_pvalue_manual(
+      stat.test,
+      # label = "p.adj",
+      tip.length = 0.01, 
+      bracket.nudge.y = 0.1
     ) +
     scale_color_manual(values = pal) +
     scale_fill_manual(values = alpha(colour = pal,
                                      alpha = 0.4)) +
     theme(legend.position = c(0.1, 0.9)) +
     theme(legend.title = element_blank()) +
-    labs(x = NULL, y = "pg/mL", title = title)
+    labs(x = NULL, y = "pg/mL", title = title) +
+    scale_x_discrete(limits = c("CCL2", "CCL3", "CCL4", "CCL5", "CXCL8"))
   if (samp == "MOLM13") {
     p <- p +
       scale_y_log10() +
@@ -587,20 +615,29 @@ cytokine_plotfun <- function(type, samp, title, dat, pal) {
   p
 }
 
+
+
 cytokine_plotlist <- pmap(
   .l = list(
     x = c("MV411", "MV411", "MOLM13"),
     y = c("bmx_crispr", "cell_line_treatment", "cell_line_treatment"),
-    z = c("", "MV4-11", "MOLM13")
+    z = c("", "MV4-11", "MOLM13"),
+    ytrans = c(\(x){x}, \(x){x}, log10)
   ),
-  .f = \(x, y, z) cytokine_plotfun(
+  .f = \(x, y, z, ytrans) cytokine_plotfun(
     samp = x,
     type = y,
     title = z,
     dat = cytokine_array_data,
-    pal = experimental_group_palette
+    pal = experimental_group_palette,
+    yt = ytrans
   )
 ) |> set_names(c("crispr_ko_plot", "mv411_drug_plot", "molm13_drug_plot"))
+
+cytokine_plotlist$crispr_ko_plot 
+cytokine_plotlist$mv411_drug_plot
+cytokine_plotlist$molm13_drug_plot
+
 
 
 # figure 5D
