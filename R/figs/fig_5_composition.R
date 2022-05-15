@@ -26,7 +26,7 @@ fig5 <- plot_grid(
 )
 
 save_plot(
-  plot = fig5+ theme(plot.background = element_rect(fill = "white")), 
+  plot = fig5+ theme(plot.background = element_rect(fill = "white", color = "white")), 
   filename = str_glue("{network_out}/fig_5.png"),
   base_width = 7.5, 
   base_height = 9.75

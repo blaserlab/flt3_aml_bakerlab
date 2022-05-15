@@ -557,14 +557,22 @@ cytokine_plotfun <- function(type, samp, title, dat, pal, yt) {
     group_by(analyte) |> 
     t_test(value ~ condition) |>  
     add_significance()
-  if (type == "cell_line_treatment" && samp == "MV411") {
-    stat.test <- add_row(.data = stat.test, analyte = "CCL4", .before = 4)
-  }
   stat.test <- stat.test |> 
     add_xy_position(x = "analyte", 
                     dodge = 0.5, 
                     y.trans = yt) |> 
     filter(group1 %in% c("WT", "DMSO"))
+  if ("CCL4" %notin% stat.test$analyte) {
+    stat.test$x <- ifelse(stat.test$analyte %in% c("CCL5", "CXCL8"), 
+                          stat.test$x+1, 
+                          stat.test$x)
+    stat.test$xmin <- ifelse(stat.test$analyte %in% c("CCL5", "CXCL8"), 
+                          stat.test$xmin+1, 
+                          stat.test$xmin)
+    stat.test$xmax <- ifelse(stat.test$analyte %in% c("CCL5", "CXCL8"), 
+                          stat.test$xmax+1, 
+                          stat.test$xmax)
+  }
   conds <- as.character(unique(dat_avg$condition))
   pal <- pal[conds]
   p <- ggplot(mapping = aes(
@@ -597,7 +605,8 @@ cytokine_plotfun <- function(type, samp, title, dat, pal, yt) {
       stat.test,
       # label = "p.adj",
       tip.length = 0.01, 
-      bracket.nudge.y = 0.1
+      bracket.nudge.y = 0.1, 
+      hide.ns = TRUE
     ) +
     scale_color_manual(values = pal) +
     scale_fill_manual(values = alpha(colour = pal,
@@ -633,12 +642,6 @@ cytokine_plotlist <- pmap(
     yt = ytrans
   )
 ) |> set_names(c("crispr_ko_plot", "mv411_drug_plot", "molm13_drug_plot"))
-
-cytokine_plotlist$crispr_ko_plot 
-cytokine_plotlist$mv411_drug_plot
-cytokine_plotlist$molm13_drug_plot
-
-
 
 # figure 5D
 dmso_matrix <- 
