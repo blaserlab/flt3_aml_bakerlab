@@ -87,7 +87,7 @@ genes_to_highlight_post <- c("CCL5", "CXCL1", "CXCL2")
 
 volcano_data_post <- pseudobulk_post_myeloblast %>% 
   mutate(threshold = padj < 0.1 & abs(log2FoldChange) >= 0.58) %>%
-  mutate(text_label = ifelse(gene_short_name %in% genes_to_highlight_post, gene_short_name, ""))
+  mutate(text_label = ifelse(gene_short_name %in% genes_to_highlight_post, gene_short_name, NA))
 
 volcano_plot_post <-
   ggplot(
@@ -465,19 +465,10 @@ col_fun_1 <- colorRamp2(breaks = c(0,max(heatmap_metadata$Cells)), colors = c("t
 
 ha <- HeatmapAnnotation(
   df = heatmap_metadata, # has to be in the same order as the columns it is labeling; there is no other connection
-  col = list(Patient = c("2" = brewer.pal(n = 7, name = "Set1")[1],
-                         "4" = brewer.pal(n = 7, name = "Set1")[2],
-                         "5" = brewer.pal(n = 7, name = "Set1")[3],
-                         "17" = brewer.pal(n = 7, name = "Set1")[4],
-                         "20" = brewer.pal(n = 7, name = "Set1")[5],
-                         "21" = brewer.pal(n = 7, name = "Set1")[6],
-                         "22" = brewer.pal(n = 7, name = "Set1")[7]),
-             Tissue = c("bm" = "#3C5488", 
-                        "blood" = "#DC0000"),
-             Response = c("sensitive" = "#7FBC41", 
-                          "unresponsive" = "#F1B6DA"),
-             Timepoint = c("pre-treatment" = "#9E0142",
-                           "post-treatment" = "#FEE08B"),
+  col = list(Patient = experimental_group_palette,
+             Tissue = experimental_group_palette,
+             Response = experimental_group_palette,
+             Timepoint = experimental_group_palette,
              Cells = col_fun_1
   ),
   gp = gpar(col = "grey80"),

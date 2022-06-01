@@ -1,5 +1,5 @@
 
-fig2 <- plot_grid(
+fig2 <- cowplot::plot_grid(
   umap_partition,
   umap_myeloblast_localn,
   volcano_plot_post,
@@ -12,7 +12,6 @@ fig2 <- plot_grid(
   labels = c("A", "B", "C", "D", "", ""),
   rel_heights = c(1, 1, 1)
 )
-
 
 save_plot(
   plot = fig2 + theme(plot.background = element_rect(fill = "white", color = "white")),

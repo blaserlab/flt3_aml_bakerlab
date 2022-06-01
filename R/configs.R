@@ -12,8 +12,6 @@ theme_set(theme_cowplot(font_size = 10))
 # analysis configurations -------------------------------------------------
 
 experimental_group_palette = c(
-  "unresponsive" = "#3C5488",
-  "sensitive" = "#DC0000",
   "Marrow T" = "#CCEBC5",
   "CD14 Monocytoid" = "#FFED6F",
   "Myeloblast" = "#BEBADA",
@@ -27,7 +25,20 @@ experimental_group_palette = c(
   "KO12" = "#0000FF", 
   "KO13" = "#A00000",
   "DMSO" = "#000000", 
-  "CHMFL" = "#0000FF"
+  "CHMFL" = "#0000FF",
+  "2" = brewer.pal(n = 7, name = "Set1")[1],
+  "4" = brewer.pal(n = 7, name = "Set1")[2],
+  "5" = brewer.pal(n = 7, name = "Set1")[3],
+  "17" = brewer.pal(n = 7, name = "Set1")[4],
+  "20" = brewer.pal(n = 7, name = "Set1")[5],
+  "21" = brewer.pal(n = 7, name = "Set1")[6],
+  "22" = brewer.pal(n = 7, name = "Set1")[7],
+  "bm" = "#3C5488", 
+  "blood" = "#DC0000",
+  "sensitive" = "#7FBC41", 
+  "unresponsive" = "#F1B6DA",
+  "pre-treatment" = "grey90",
+  "post-treatment" = "grey40"
 )
 
 

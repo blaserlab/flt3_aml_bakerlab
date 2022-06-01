@@ -44,8 +44,8 @@ fig_6 <-
 
 cowplot::save_plot(
   plot = fig_6,
-  # filename = "test.pdf",
-  filename = str_glue("{network_out}/fig_6.pdf"),
+  filename = "test.pdf",
+  # filename = str_glue("{network_out}/fig_6.pdf"),
   base_width = 7.5, 
   base_height = 9.75,
 ) 

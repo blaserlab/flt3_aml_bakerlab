@@ -44,8 +44,14 @@
     "BH": {
       "Package": "BH",
       "Version": "1.78.0-0",
-      "Source": "Repository",
+      "Source": "CRAN",
       "Repository": "CRAN",
+      "RemoteType": "standard",
+      "RemotePkgRef": "BH",
+      "RemoteRef": "BH",
+      "RemoteRepos": "https://cloud.r-project.org",
+      "RemotePkgPlatform": "source",
+      "RemoteSha": "1.78.0-0",
       "Hash": "4e348572ffcaa2fb1e610e7a941f6f3a",
       "Requirements": []
     },
@@ -1440,7 +1446,7 @@
     },
     "blaseRtemplates": {
       "Package": "blaseRtemplates",
-      "Version": "0.0.0.9110",
+      "Version": "0.0.0.9115",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
@@ -1448,8 +1454,8 @@
       "RemoteUsername": "blaserlab",
       "RemotePkgRef": "blaserlab/blaseRtemplates",
       "RemoteRef": "HEAD",
-      "RemoteSha": "ce201a0180e429ee87960bc2d297bc04ca7922b5",
-      "Hash": "7c9ce41c7edbb5f5171d7609d970bd08",
+      "RemoteSha": "591536fa5dfb09969633fe71a10c14c0d1ba552a",
+      "Hash": "95464713db1042ca0306ef27cc538ea0",
       "Requirements": [
         "cli",
         "devtools",
@@ -3691,8 +3697,14 @@
     "markdown": {
       "Package": "markdown",
       "Version": "1.1",
-      "Source": "Repository",
+      "Source": "CRAN",
       "Repository": "CRAN",
+      "RemoteType": "standard",
+      "RemotePkgRef": "markdown",
+      "RemoteRef": "markdown",
+      "RemoteRepos": "https://cloud.r-project.org",
+      "RemotePkgPlatform": "source",
+      "RemoteSha": "1.1",
       "Hash": "61e4a10781dd00d7d81dd06ca9b94e95",
       "Requirements": [
         "mime",

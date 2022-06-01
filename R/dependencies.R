@@ -13,7 +13,7 @@
 # package installation ----------------------------------------------------
 
 # # Try this first...it's faster:
-# blaseRtemplates::easy_install("CellChat", how = "link_from_cache")
+# blaseRtemplates::easy_install("patchwork", how = "link_from_cache")
 
 # # If you need a new package or an update, try this:
 # blaseRtemplates::easy_install("", how = "new_or_update")
