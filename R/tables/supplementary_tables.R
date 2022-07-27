@@ -30,7 +30,8 @@ rowData(cds_anno_aligned_tissue_id) %>%
   as_tibble() %>%
   select(id, gene_short_name, module) %>%
   arrange(module, gene_short_name) %>%
-  write_tsv(str_glue("{tables_directory}/gene_modules.tsv"))
+  # write_tsv(str_glue("{tables_directory}/gene_modules.tsv"))
+  write_tsv("~/network/P/blaser_lab_p/writing/flt3_aml_bakerlab_manuscript/tables/table_s4.tsv")
 
 gorilla_modules_cds_anno %>%
   arrange(module, `FDR q-value`) %>%
