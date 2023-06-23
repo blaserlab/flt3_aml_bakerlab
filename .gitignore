@@ -7,3 +7,6 @@
 R/local_configs.R
 R/git_commands.R
 R/regenerated_git_commands.R
+*.png
+*.tiff
+*.pdf
