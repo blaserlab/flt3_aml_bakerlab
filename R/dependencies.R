@@ -17,6 +17,15 @@ suppressPackageStartupMessages(library("ggtext"))
 suppressPackageStartupMessages(library("CellChat"))
 
 
-# use this to load the data package-------------------------------------
+# if using the blaseRtemplates environment, edit this line and run to load the data package-------------------------------------
 blaseRtemplates::project_data(path = "/home/OSUMC.EDU/blas02/network/X/Labs/Blaser/share/collaborators/bakerlab_flt3_gilt_project/datapkg")
+
+# if using standard R data functions, uncomment and run these line to load the data package into your global environment:
+
+
+d <- data(package = "flt3.aml.bakerlab.datapkg")
+data(list = d$results[, "Item"], package = "flt3.aml.bakerlab.datapkg")
+rm(d)
+
+
 

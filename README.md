@@ -1,10 +1,8 @@
 # BMX Kinase Mediates Gilteritinib Resistance in FLT3-mutated AML through Microenvironmental Factors
 
-This is an analysis project. It requires the processed R data package which is available at the Dryad URL provided in the manuscript. The data package is currently private for peer review. When downloaded from Dryad it will be compressed as a zip file. After unzipping, there should be a single file with the extension .tar.gz. This can be installed on your system like any other R package. However the recommended way to install it is in concert with this analysis project (see below). Together, this analysis project and the data package will reproduce all R-generated figures from the manuscript.
+This is an analysis project. It requires a processed R data package to be used.  This is available at https://figshare.com/articles/dataset/Untitled_Item/23535606.  Download this .tar.gz file and install on your system like any other R package.  Together, this analysis project and the data package will reproduce all R-generated figures from the manuscript.
 
-After cloning this project, open R/dependencies.R. The first thing you should do is make sure you have renv installed. This is the package-management software used in the project. Then run renv::restore(). This will attempt to install all required packages listed in renv.lock into a local environment within your copy of the analysis project. Packages may be missed by this process; these should be installed manually using renv::install(<package name>). The blaseRtools and blaseRdata packages can be installed using renv::install("blaserlab/blaseRtools") and renv::install("blaserlab/blaseRdata") if necessary. These are custom tools used to make the figures. The rest should be well known and freely available.
-
-Please note the last two lines of code in R/dependencies.R. The argument for the function bb_renv_datapkg() should be edited to point to the directory holding the unzipped data package for the analysis. This function will go to that directory and install the latest available version of the data into your local project. You can also specify the exact version if necessary by supplying the full file name ending in .tar.gz. The last line will load the data into a hidden environment. This is meant to emulate the lazyloading function of typical R packages: the data objects are loaded as pointers to files on disk and do not occupy memory until called. This minimizes the memory footprint and bypasses the normal size restriction on lazyloading package data in R.
+After cloning this project on your system, open R/dependencies.R. If you are using the blaseRtemplates environment, edit the argument to the project_data() command to point to the directory where the flt3.aml.datapkg tar.gz file is stored.  Otherwise, comment out these lines and uncomment the last three commands to load the data using the standard R data functions.
 
 Once everything is properly installed, you should restart the R session and source R/dependencies.R. If it sources without errors, then source R/configs.R. This has required aesthetic, output and other information for the files. You should edit the output section at the bottom, or copy to local_configs.R and then edit.
 
@@ -16,26 +14,10 @@ If you want to inspect the code used to generate the data package, it will be in
 
 ## System Requirements
 
--   [R v4.1.2](https://www.r-project.org/)
--   [Bioconductor version 3.14](https://bioconductor.org/packages/release/bioc/html/BiocVersion.html)
+-   [R v4.3.0](https://www.r-project.org/)
 -   This software has been tested on Linux Ubuntu 18.04.6 and Windows 10
 -   Loading the complete dataset occupies close to 8 GB memory.
 
-## Installation
-
--   clone the analysis repository to your computer using `git clone https://github.com/blaserlab/flt3_aml_bakerlab.git`
--   open the R project by double-clicking on the flt3_aml_bakerlab.Rproj file
--   open the file R/dependencies.R
--   uncomment and run the command, `renv::restore()`. This will attempt to install all required software dependencies.  
--   install any packages that cannot be found using `renv::install("<package name>")`.
-    -   for bioconductor packages: `renv::install("bioc::<package name>")`
-    -   for packages on github: `renv::install("<githubowner>/<repository name>")`
--   download the data package to your computer from the link provided in the manuscript and unzip
--   edit the line in R/dependencies.R starting `bb_renv_datapkg...` to point to the directory containing the unzipped data package. This should be a fully-qualified absolute path, meaning it should start with "/" on linux or mac and "C:/" or another drive identifier on Windows.
--   source R/dependencies.R
--   typical time required for the first installation and data loading is approximately 15 minutes.  This excludes the time required to download the data package.
--   open R/configs.R. Edit the lines beginning `network_out <-` and `tables_directory <-` to point to existing directories on your system
--   source R/configs.R
 
 ## Demo
 
