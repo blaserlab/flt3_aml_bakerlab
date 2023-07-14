@@ -23,9 +23,9 @@ blaseRtemplates::project_data(path = "/home/OSUMC.EDU/blas02/network/X/Labs/Blas
 # if using standard R data functions, uncomment and run these line to load the data package into your global environment:
 
 
-d <- data(package = "flt3.aml.bakerlab.datapkg")
-data(list = d$results[, "Item"], package = "flt3.aml.bakerlab.datapkg")
-rm(d)
+# d <- data(package = "flt3.aml.bakerlab.datapkg")
+# data(list = d$results[, "Item"], package = "flt3.aml.bakerlab.datapkg")
+# rm(d)
 
 
 
